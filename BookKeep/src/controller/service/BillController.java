@@ -20,6 +20,7 @@ import com.alibaba.fastjson.JSON;
 @Controller
 @RequestMapping(value = "bill")
 public class BillController {
+
 	@RequestMapping(value = "getallbill")
 	public void getallbill(HttpServletRequest request,
 			HttpServletResponse response, Model model) {

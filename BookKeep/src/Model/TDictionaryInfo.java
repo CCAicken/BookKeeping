@@ -12,7 +12,7 @@ public class TDictionaryInfo implements java.io.Serializable {
 	private String dictionaryName;
 	private String dictionaryType;
 	private String content;
-	private Integer sortNum;
+	private String sortNum;
 
 	// Constructors
 
@@ -22,16 +22,15 @@ public class TDictionaryInfo implements java.io.Serializable {
 
 	/** minimal constructor */
 	public TDictionaryInfo(String dictionaryInfoId, String dictionaryName,
-			String dictionaryType, Integer sortNum) {
+			String dictionaryType) {
 		this.dictionaryInfoId = dictionaryInfoId;
 		this.dictionaryName = dictionaryName;
 		this.dictionaryType = dictionaryType;
-		this.sortNum = sortNum;
 	}
 
 	/** full constructor */
 	public TDictionaryInfo(String dictionaryInfoId, String dictionaryName,
-			String dictionaryType, String content, Integer sortNum) {
+			String dictionaryType, String content, String sortNum) {
 		this.dictionaryInfoId = dictionaryInfoId;
 		this.dictionaryName = dictionaryName;
 		this.dictionaryType = dictionaryType;
@@ -73,11 +72,11 @@ public class TDictionaryInfo implements java.io.Serializable {
 		this.content = content;
 	}
 
-	public Integer getSortNum() {
+	public String getSortNum() {
 		return this.sortNum;
 	}
 
-	public void setSortNum(Integer sortNum) {
+	public void setSortNum(String sortNum) {
 		this.sortNum = sortNum;
 	}
 

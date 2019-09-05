@@ -25,8 +25,8 @@
                 <comment>内容</comment>
             </column>
         </property>
-        <property name="sortNum" type="java.lang.Integer">
-            <column name="sortNum" not-null="true">
+        <property name="sortNum" type="java.lang.String">
+            <column name="sortNum" length="100">
                 <comment>排序号</comment>
             </column>
         </property>

@@ -11,7 +11,7 @@ public class TUser implements java.io.Serializable {
 	private String userId;
 	private String username;
 	private String password;
-	private Integer tel;
+	private String tel;
 
 	// Constructors
 
@@ -20,7 +20,7 @@ public class TUser implements java.io.Serializable {
 	}
 
 	/** full constructor */
-	public TUser(String userId, String username, String password, Integer tel) {
+	public TUser(String userId, String username, String password, String tel) {
 		this.userId = userId;
 		this.username = username;
 		this.password = password;
@@ -53,11 +53,11 @@ public class TUser implements java.io.Serializable {
 		this.password = password;
 	}
 
-	public Integer getTel() {
+	public String getTel() {
 		return this.tel;
 	}
 
-	public void setTel(Integer tel) {
+	public void setTel(String tel) {
 		this.tel = tel;
 	}
 

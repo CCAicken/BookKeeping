@@ -20,8 +20,8 @@
                 <comment>密码</comment>
             </column>
         </property>
-        <property name="tel" type="java.lang.Integer">
-            <column name="tel" not-null="true">
+        <property name="tel" type="java.lang.String">
+            <column name="tel" length="50" not-null="true">
                 <comment>电话</comment>
             </column>
         </property>
