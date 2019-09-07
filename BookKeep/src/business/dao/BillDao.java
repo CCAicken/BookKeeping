@@ -64,4 +64,30 @@ public interface BillDao {
 	 */
 	public List<VBill> getAllBill();
 
+	/**
+	 * 根据用户id 获取用户所有账单数
+	 * 
+	 * @param userid
+	 * @return int 账单数
+	 */
+	public int getBillCountByUser(String userid);
+
+	/**
+	 * 根据用户id 获取用户账单天数
+	 * 
+	 * @param userid
+	 *            用户id
+	 * @return int 账单天数
+	 */
+	public int getBillDaysByUser(String userid);
+
+	/**
+	 * 根据用户id 获取用户当前连续记账天数
+	 * 
+	 * @param userid
+	 *            用户id
+	 * @return int 连续记账天数
+	 */
+	public int getBillContinueDaysByUser(String userid);
+
 }

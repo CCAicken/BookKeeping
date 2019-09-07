@@ -190,6 +190,24 @@ public interface iHibBaseDAO {
 	public Object findById(Class cls, java.io.Serializable id);
 
 	/**
+	 * 使用无参数的sql实现查询的，他将返回基于sql中查询对象的List数组对象 不含列名
+	 * 
+	 * @param String
+	 *            符合hql结构的无参数查询语句
+	 * @return List 失败返回null
+	 */
+	public List selectBySql(String sql);
+
+	/**
+	 * 使用无参数的sql实现查询的，他将返回基于sql中查询对象的List数组对象 含列名
+	 * 
+	 * @param String
+	 *            符合sql结构的无参数查询语句
+	 * @return List 失败返回null
+	 */
+	public List selectBySqlCol(String sql);
+
+	/**
 	 * 利用无参数的sql实现数据表对象的更新操作
 	 * 
 	 * @param String

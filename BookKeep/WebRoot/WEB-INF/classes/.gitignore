@@ -1,8 +1,4 @@
 /Basic/
-/Model/
-/applicationContext.xml
-/hibernate.cfg.xml
-/springmvc-servlet.xml
+/util/
 /business/
 /controller/
-/util/

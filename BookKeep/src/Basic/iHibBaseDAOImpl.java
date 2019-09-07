@@ -1,7 +1,15 @@
 package Basic;
 
 import java.io.Serializable;
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
@@ -504,44 +512,281 @@ public class iHibBaseDAOImpl implements iHibBaseDAO {
 	}
 
 	@Override
+	public List selectBySql(String sql) {
+		Session session = HibSessionFactory.getSession();
+		List<String> list = new ArrayList<String>();
+		try {
+			// 将会话session对象转换为jdbc的connection
+			Connection con = session.connection();
+			PreparedStatement ptmt = con.prepareStatement(sql,
+					ResultSet.TYPE_SCROLL_INSENSITIVE,
+					ResultSet.CONCUR_READ_ONLY);
+			ResultSet rs = ptmt.executeQuery();
+			ResultSetMetaData md = rs.getMetaData(); // 获得结果集结构信息,元数据
+			int columnCount = md.getColumnCount(); // 获得列数
+			while (rs.next()) {
+
+				for (int i = 1; i <= columnCount; i++) {
+					list.add(rs.getObject(i).toString());
+				}
+			}
+
+			session.close();
+			return list;
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			// log.error(LogUtil.error("Basic.iHibBaseDAOImpl.update",
+			// e));//向日志输出error级别的日志信息
+			e.printStackTrace();
+
+			if (session != null)
+				session.close();
+			return null;
+		}
+
+	}
+
+	@Override
+	public List selectBySqlCol(String sql) {
+		Session session = HibSessionFactory.getSession();
+		List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
+
+		try {
+			// 将会话session对象转换为jdbc的connection
+			Connection con = session.connection();
+			PreparedStatement ptmt = con.prepareStatement(sql,
+					ResultSet.TYPE_SCROLL_INSENSITIVE,
+					ResultSet.CONCUR_READ_ONLY);
+			ResultSet rs = ptmt.executeQuery();
+			ResultSetMetaData md = rs.getMetaData(); // 获得结果集结构信息,元数据
+			int columnCount = md.getColumnCount(); // 获得列数
+			while (rs.next()) {
+				Map<String, Object> rowData = new HashMap<String, Object>();
+
+				for (int i = 1; i <= columnCount; i++) {
+					rowData.put(md.getColumnName(i), rs.getObject(i));
+				}
+				list.add(rowData);
+
+			}
+
+			session.close();
+			return list;
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			// log.error(LogUtil.error("Basic.iHibBaseDAOImpl.update",
+			// e));//向日志输出error级别的日志信息
+			e.printStackTrace();
+
+			if (session != null)
+				session.close();
+			return null;
+		}
+	}
+
+	@Override
 	public boolean update(String sql) {
-		// TODO Auto-generated method stub
+		Session session = HibSessionFactory.getSession();
+
+		Transaction tx = null;
+		try {
+			tx = session.beginTransaction();// 开始事务
+			// 将会话session对象转换为jdbc的connection
+			Connection con = session.connection();
+			PreparedStatement ptmt = con.prepareStatement(sql);
+			int row = ptmt.executeUpdate();
+			tx.commit();// 持久化操作
+			session.close();
+			if (row > 0) {
+				return true;
+			} else {
+				return false;
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			// log.error(LogUtil.error("Basic.iHibBaseDAOImpl.update",
+			// e));//向日志输出error级别的日志信息
+			e.printStackTrace();
+			if (tx != null)
+				tx.rollback();// 撤销
+			if (session != null)
+				session.close();
+		}
 		return false;
 	}
 
 	@Override
-	public boolean update(String hql, Object[] para) {
-		// TODO Auto-generated method stub
+	public boolean update(String sql, Object[] para) {
+		Session session = HibSessionFactory.getSession();
+
+		Transaction tx = null;
+		try {
+			tx = session.beginTransaction();// 开始事务
+			// 将会话session对象转换为jdbc的connection
+			Connection con = session.connection();
+			PreparedStatement ptmt = con.prepareStatement(sql);
+			// 设置参数
+			for (int i = 0; i < para.length; i++) {
+				ptmt.setObject(i + 1, para[i]);
+			}
+			int row = ptmt.executeUpdate();
+			tx.commit();// 持久化操作
+			session.close();
+			if (row > 0) {
+				return true;
+			} else {
+				return false;
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			// log.error(LogUtil.error("Basic.iHibBaseDAOImpl.update",
+			// e));//向日志输出error级别的日志信息
+			e.printStackTrace();
+			if (tx != null)
+				tx.rollback();// 撤销
+			if (session != null)
+				session.close();
+		}
 		return false;
 	}
 
 	@Override
 	public boolean delete(String sql) {
-		// TODO Auto-generated method stub
+		Session session = HibSessionFactory.getSession();
+
+		Transaction tx = null;
+		try {
+			tx = session.beginTransaction();// 开始事务
+			// 将会话session对象转换为jdbc的connection
+			Connection con = session.connection();
+			PreparedStatement ptmt = con.prepareStatement(sql);
+
+			int row = ptmt.executeUpdate();
+			tx.commit();// 持久化操作
+			session.close();
+			if (row > 0) {
+				return true;
+			} else {
+				return false;
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			// log.error(LogUtil.error("Basic.iHibBaseDAOImpl.delete",
+			// e));//向日志输出error级别的日志信息
+			e.printStackTrace();
+
+			if (tx != null)
+				tx.rollback();// 撤销
+			if (session != null)
+				session.close();
+		}
 		return false;
 	}
 
 	@Override
 	public boolean delete(String sql, Object[] para) {
-		// TODO Auto-generated method stub
+		Session session = HibSessionFactory.getSession();
+
+		Transaction tx = null;
+		try {
+			tx = session.beginTransaction();// 开始事务
+			// 将会话session对象转换为jdbc的connection
+			Connection con = session.connection();
+			PreparedStatement ptmt = con.prepareStatement(sql);
+			// 设置参数
+			for (int i = 0; i < para.length; i++) {
+				ptmt.setObject(i + 1, para[i]);
+			}
+			int row = ptmt.executeUpdate();
+			tx.commit();// 持久化操作
+			session.close();
+			if (row > 0) {
+				return true;
+			} else {
+				return false;
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			if (tx != null)
+				tx.rollback();// 撤销
+			if (session != null)
+				session.close();
+		}
 		return false;
 	}
 
 	@Override
 	public Object executeProduce(String procName) {
-		// TODO Auto-generated method stub
+		Session session = HibSessionFactory.getSession();
+
+		Transaction tx = null;
+		try {
+			tx = session.beginTransaction();// 开始事务
+			// 将会话session对象转换为jdbc的connection
+			Connection con = session.connection();
+			CallableStatement ctmt = con.prepareCall("{? = call " + procName
+					+ "}");
+			ctmt.registerOutParameter(1, java.sql.Types.INTEGER);
+			boolean type = ctmt.execute();
+			tx.commit();
+			if (type)// 为true 表明存储过程是一个select语句
+			{
+				ResultSet rs = ctmt.getResultSet();// 获得返回值
+				return rs;
+			} else // 不是select 语句，则获取返回值
+			{
+				int isSuccess = ctmt.getInt(1);// 获取返回值
+				session.close();
+				return new Integer(isSuccess);
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			if (tx != null)
+				tx.rollback();// 撤销
+			if (session != null)
+				session.close();
+		}
 		return null;
 	}
 
 	@Override
 	public Object executeProduce(String procName, Object[] para) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+		Session session = HibSessionFactory.getSession();
 
-	public static void main(String args[]) {
-		iHibBaseDAO bdao = new iHibBaseDAOImpl();
-		System.out.println(bdao.select("select count(*) from TUser"));
+		Transaction tx = null;
+		try {
+			tx = session.beginTransaction();// 开始事务
+			// 将会话session对象转换为jdbc的connection
+			Connection con = session.connection();
+			CallableStatement ctmt = con.prepareCall("{? = call " + procName
+					+ "}");
+			ctmt.registerOutParameter(1, java.sql.Types.INTEGER);
+			for (int i = 0; i < para.length; i++) {
+				ctmt.setObject(i + 2, para[i]);
+			}
+			boolean type = ctmt.execute();
+			tx.commit();
+			if (type)// 为true 表明存储过程是一个select语句
+			{
+				ResultSet rs = ctmt.getResultSet();// 获得返回值
+				return rs;
+			} else // 不是select 语句，则获取返回值
+			{
+				int isSuccess = ctmt.getInt(1);// 获取返回值
+				session.close();
+				return new Integer(isSuccess);
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			if (tx != null)
+				tx.rollback();// 撤销
+			if (session != null)
+				session.close();
+		}
+		return null;
 	}
 
 }
