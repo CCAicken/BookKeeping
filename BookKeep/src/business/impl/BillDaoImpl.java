@@ -120,13 +120,13 @@ public class BillDaoImpl implements BillDao {
 		return days;
 	}
 
-	public static void main(String[] args) {
-		BillDaoImpl dooo = new BillDaoImpl();
-		// List<VBill> list = dooo.getAllBill();
-		// for (VBill vBill : list) {
-		// System.out.println(vBill.getBillId());
-		// }
-		System.out.println(dooo.getBillContinueDaysByUser("1001"));
-	}
+	// public static void main(String[] args) {
+	// BillDaoImpl dooo = new BillDaoImpl();
+	// // List<VBill> list = dooo.getAllBill();
+	// // for (VBill vBill : list) {
+	// // System.out.println(vBill.getBillId());
+	// // }
+	// System.out.println(dooo.getBillContinueDaysByUser("1001"));
+	// }
 
 }

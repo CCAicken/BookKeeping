@@ -105,6 +105,22 @@ public class BillController {
 		// return "";
 	}
 
+	/**
+	 * 添加账单
+	 * 
+	 * @param request
+	 * @param response
+	 * @param userid
+	 *            用户id
+	 * @param money
+	 *            钱
+	 * @param billType
+	 *            账单类型（收入/支出）
+	 * @param consumptionType
+	 * @param remarks
+	 *            备注
+	 * @param model
+	 */
 	@RequestMapping(value = "addbill")
 	public void addBill(HttpServletRequest request,
 			HttpServletResponse response, String userid, Double money,
