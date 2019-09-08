@@ -26,4 +26,14 @@ public class UserDaoImpl implements UserDao {
 		return (String) bdao.insert(user);
 	}
 
+	// public static void main(String[] args) {
+	// UserDaoImpl udao = new UserDaoImpl();
+	// TUser user = new TUser();
+	// user.setUserId("ssodadasgw4e2ew25dsfs");
+	// user.setPassword("123456");
+	// user.setUsername("torrent");
+	// user.setTel("12345678910");
+	// System.out.println(udao.insert(user));
+	// }
+
 }

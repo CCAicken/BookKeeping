@@ -7,7 +7,7 @@
 <hibernate-mapping>
     <class name="Model.TUser" table="T_User" catalog="BookKeeping">
         <id name="userId" type="java.lang.String">
-            <column name="userId" length="20" />
+            <column name="userId" length="50" />
             <generator class="assigned"></generator>
         </id>
         <property name="username" type="java.lang.String">

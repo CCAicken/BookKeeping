@@ -10,7 +10,7 @@
                 <column name="billID" />
             </id>
             <property name="userId" type="java.lang.String">
-                <column name="userId" length="20" />
+                <column name="userId" length="50" />
             </property>
             <property name="username" type="java.lang.String">
                 <column name="username" length="20" />
