@@ -120,6 +120,23 @@ public class BillDaoImpl implements BillDao {
 		return days;
 	}
 
+	@Override
+	public double getBillInByTime(String userid, String time) {
+		// TODO Auto-generated method stub
+		String hql = "select sum(money) from VBill where userid=? and  createTime like ? and billType=0";
+		Object[] param = { userid, time };
+		int sumIn = bdao.selectValue(hql, param);
+		return sumIn;
+	}
+
+	@Override
+	public double getBillOutByTime(String userid, String time) {
+		String hql = "select sum(money) from VBill where userid=? and  createTime like ? and billType=1";
+		Object[] param = { userid, time };
+		int sumIn = bdao.selectValue(hql, param);
+		return sumIn;
+	}
+
 	// public static void main(String[] args) {
 	// BillDaoImpl dooo = new BillDaoImpl();
 	// // List<VBill> list = dooo.getAllBill();

@@ -36,8 +36,9 @@ public class BillController {
 		// 回传json字符串
 		response.setCharacterEncoding("utf-8");
 		response.setContentType("application/json");
-		String id = request.getParameter("id");
-		System.out.print(id);
+		String userid = request.getParameter("user");
+		String date = request.getParameter("yearmonth");
+		System.out.print(userid + date);
 
 		LayuiData laydata = new LayuiData();
 
@@ -234,5 +235,39 @@ public class BillController {
 			e.printStackTrace();
 		}
 		// return "";
+	}
+
+	@RequestMapping(value = "getsumbymonth")
+	public void getSumByMonth(String userid, HttpServletRequest request,
+			HttpServletResponse response, String time, Model model) {
+		BillDaoImpl bdao = new BillDaoImpl();
+
+		// 回传json字符串
+		response.setCharacterEncoding("utf-8");
+		response.setContentType("application/json");
+
+		double in = bdao.getBillInByTime(userid, time);
+		double out = bdao.getBillOutByTime(userid, time);
+		double sum = in - out;
+		LayuiData laydata = new LayuiData();
+		if (sum >= 0) {
+			laydata.code = LayuiData.SUCCESS;
+			laydata.data = sum;
+			laydata.msg = "结余";
+		} else {
+			laydata.code = LayuiData.ERRR;
+			laydata.data = 0;
+			laydata.msg = "结余";
+		}
+		Writer ptintout;
+		try {
+			ptintout = response.getWriter();
+			ptintout.write(JSON.toJSONString(laydata));
+			ptintout.flush();
+			ptintout.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }

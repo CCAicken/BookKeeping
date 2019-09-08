@@ -90,4 +90,22 @@ public interface BillDao {
 	 */
 	public int getBillContinueDaysByUser(String userid);
 
+	/**
+	 * 根据时间和用户获取用户当月收入总和
+	 * 
+	 * @param userid
+	 * @param time
+	 * @return
+	 */
+	public double getBillInByTime(String userid, String time);
+
+	/**
+	 * 根据时间和用户获取用户当月支出总和
+	 * 
+	 * @param userid
+	 * @param time
+	 * @return
+	 */
+	public double getBillOutByTime(String userid, String time);
+
 }
