@@ -85,7 +85,8 @@ public class BillDaoImpl implements BillDao {
 		List list = bdao
 				.selectBySql("select count(*) from (select DATE_FORMAT(createTime,'%Y-%m-%d') as time From T_Bill where userid='"
 						+ userid + "' GROUP BY time) as timetab");
-		return (int) list.get(0);
+		System.out.println(list.get(0));
+		return Integer.parseInt(list.get(0).toString());
 	}
 
 	@Override
@@ -119,13 +120,13 @@ public class BillDaoImpl implements BillDao {
 		return days;
 	}
 
-	// public static void main(String[] args) {
-	// BillDaoImpl dooo = new BillDaoImpl();
-	// // List<VBill> list = dooo.getAllBill();
-	// // for (VBill vBill : list) {
-	// // System.out.println(vBill.getBillId());
-	// // }
-	// System.out.println(dooo.getBillContinueDaysByUser("1001"));
-	// }
+	 public static void main(String[] args) {
+	 BillDaoImpl dooo = new BillDaoImpl();
+	 // List<VBill> list = dooo.getAllBill();
+	 // for (VBill vBill : list) {
+	 // System.out.println(vBill.getBillId());
+	 // }
+	 System.out.println(dooo.getBillContinueDaysByUser("1001"));
+	 }
 
 }
