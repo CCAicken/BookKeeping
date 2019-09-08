@@ -149,10 +149,13 @@ public class BillDaoImpl implements BillDao {
 	@Override
 	public List<yearbilltool> yearsBillOut(String years, String userid) {
 		yearbilltool billtool = new yearbilltool();
+
+		List<yearbilltool> list = null;
 		String sql = "select  DATE_FORMAT(createTime,'%Y-%m') as time,sum(money) as money, billtype from T_Bill where billtype=1  and createTime like '"
 				+ years + "%' and  userid=" + userid + " GROUP BY time";
 
-		return billtool.toList(bdao.selectBySqlrs(sql));
+		list = billtool.toList(bdao.selectBySqlrs(sql));
+		return list;
 	}
 
 	@Override

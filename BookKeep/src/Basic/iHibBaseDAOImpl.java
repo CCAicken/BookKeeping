@@ -792,16 +792,15 @@ public class iHibBaseDAOImpl implements iHibBaseDAO {
 	@Override
 	public ResultSet selectBySqlrs(String sql) {
 		Session session = HibSessionFactory.getSession();
+		ResultSet rs = null;
 		try {
 			// 将会话session对象转换为jdbc的connection
 			Connection con = session.connection();
 			PreparedStatement ptmt = con.prepareStatement(sql,
 					ResultSet.TYPE_SCROLL_INSENSITIVE,
 					ResultSet.CONCUR_READ_ONLY);
-			ResultSet rs = ptmt.executeQuery();
+			rs = ptmt.executeQuery();
 
-			session.close();
-			return rs;
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			// log.error(LogUtil.error("Basic.iHibBaseDAOImpl.update",
@@ -810,8 +809,8 @@ public class iHibBaseDAOImpl implements iHibBaseDAO {
 
 			if (session != null)
 				session.close();
-			return null;
 		}
+		return rs;
 	}
 
 }
