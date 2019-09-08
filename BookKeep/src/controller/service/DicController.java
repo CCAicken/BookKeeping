@@ -51,4 +51,68 @@ public class DicController {
 			e.printStackTrace();
 		}
 	}
+
+	@RequestMapping(value = "getincome")
+	public void GetInCom(HttpServletRequest request,
+			HttpServletResponse response, Model model) {
+		DictionaryDaoImpl bdao = new DictionaryDaoImpl();
+		List<TDictionaryInfo> list = bdao.GetInCome();
+		// 回传json字符串
+		response.setCharacterEncoding("utf-8");
+		response.setContentType("application/json");
+
+		LayuiData laydata = new LayuiData();
+
+		if (list != null) {
+			laydata.code = LayuiData.SUCCESS;
+			laydata.msg = "查询成功，共查出" + list.size() + "条记录";
+			laydata.data = list;
+		} else {
+			laydata.code = LayuiData.ERRR;
+			laydata.msg = "查询失败";
+		}
+
+		Writer out;
+		try {
+			out = response.getWriter();
+			out.write(JSON.toJSONString(laydata));
+			out.flush();
+			out.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	@RequestMapping(value = "getpay")
+	public void GetPay(HttpServletRequest request,
+			HttpServletResponse response, Model model) {
+		DictionaryDaoImpl bdao = new DictionaryDaoImpl();
+		// 回传json字符串
+		response.setCharacterEncoding("utf-8");
+		response.setContentType("application/json");
+
+		List<TDictionaryInfo> list = bdao.GetPay();
+		LayuiData laydata = new LayuiData();
+
+		if (list != null) {
+			laydata.code = LayuiData.SUCCESS;
+			laydata.msg = "查询成功，共查出" + list.size() + "条记录";
+			laydata.data = list;
+		} else {
+			laydata.code = LayuiData.ERRR;
+			laydata.msg = "查询失败";
+		}
+
+		Writer out;
+		try {
+			out = response.getWriter();
+			out.write(JSON.toJSONString(laydata));
+			out.flush();
+			out.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 }
