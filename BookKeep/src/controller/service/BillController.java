@@ -119,12 +119,16 @@ public class BillController {
 	 * @param consumptionType
 	 * @param remarks
 	 *            备注
+	 * @param createtime
+	 *            时间
+	 * 
 	 * @param model
 	 */
 	@RequestMapping(value = "addbill")
 	public void addBill(HttpServletRequest request,
 			HttpServletResponse response, String userid, Double money,
-			String billType, String consumptionType, String remarks, Model model) {
+			String billType, String consumptionType, String remarks,
+			String createtime, Model model) {
 		BillDaoImpl bdao = new BillDaoImpl();
 
 		TBill bill = new TBill();
@@ -133,6 +137,7 @@ public class BillController {
 		bill.setBillType(billType);
 		bill.setConsumptionType(consumptionType);
 		bill.setRemarks(remarks);
+		bill.setCreateTime(createtime);
 
 		// 回传json字符串
 		response.setCharacterEncoding("utf-8");

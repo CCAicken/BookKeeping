@@ -22,7 +22,7 @@ import com.alibaba.fastjson.JSONObject;
 public class UserController {
 	@RequestMapping(value = "getuserid")
 	public void getOpenId(HttpServletRequest request, String code,
-			String appid, String secret, String nickname,
+			String appid, String secret, String nickName,
 			HttpServletResponse response, Model model) {
 		String userid;
 		String url = "https://api.weixin.qq.com/sns/jscode2session?";
@@ -39,7 +39,7 @@ public class UserController {
 			TUser user = new TUser();
 			user.setUserId((String) obj.get("openid"));
 			user.setPassword("123456");
-			user.setUsername(nickname);
+			user.setUsername(nickName);
 			user.setTel("12345678910");
 			userid = udao.insert(user);
 		}
