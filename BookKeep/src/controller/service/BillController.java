@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import util.LayuiData;
+import Model.TBill;
 import Model.VBill;
 import business.impl.BillDaoImpl;
 
@@ -89,6 +90,43 @@ public class BillController {
 		} else {
 			laydata.code = LayuiData.ERRR;
 			laydata.msg = "查询失败";
+		}
+
+		Writer out;
+		try {
+			out = response.getWriter();
+			out.write(JSON.toJSONString(laydata));
+			out.flush();
+			out.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		// return "";
+	}
+
+	@RequestMapping(value = "addbill")
+	public void addBill(HttpServletRequest request,
+			HttpServletResponse response, String userid, Double money,
+			String billType, String consumptionType, String remarks, Model model) {
+		BillDaoImpl bdao = new BillDaoImpl();
+
+		TBill bill = new TBill();
+		bill.setUserId(userid);
+		bill.setMoney(money);
+		bill.setBillType(billType);
+		bill.setConsumptionType(consumptionType);
+		bill.setRemarks(remarks);
+
+		// 回传json字符串
+		response.setCharacterEncoding("utf-8");
+		response.setContentType("application/json");
+
+		LayuiData laydata = new LayuiData();
+		if (bdao.insertBill(bill) != 0) {
+			laydata.msg = "账单添加成功";
+		} else {
+			laydata.msg = "账单添加失败";
 		}
 
 		Writer out;
