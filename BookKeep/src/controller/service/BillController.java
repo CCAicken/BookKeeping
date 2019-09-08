@@ -213,9 +213,11 @@ public class BillController {
 	 */
 	@RequestMapping(value = "getuserbillbytime")
 	public void getUserBillByTime(HttpServletRequest request,
-			HttpServletResponse response, String time, Model model) {
+			HttpServletResponse response, String time, String userid,
+			Model model) {
 		BillDaoImpl bdao = new BillDaoImpl();
-		String str = "where createTime like '" + time + "%'";
+		String str = "where createTime like '" + time + "%' and userid='"
+				+ userid + "'";
 		List<VBill> list = bdao.selectByPage(str, 1, 999999999);
 		// 回传json字符串
 		response.setCharacterEncoding("utf-8");
@@ -259,6 +261,40 @@ public class BillController {
 			laydata.code = LayuiData.ERRR;
 			laydata.data = 0;
 			laydata.msg = "结余";
+		}
+		Writer ptintout;
+		try {
+			ptintout = response.getWriter();
+			ptintout.write(JSON.toJSONString(laydata));
+			ptintout.flush();
+			ptintout.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	@RequestMapping(value = "getyearbill")
+	public void getYearBill(String userid, HttpServletRequest request,
+			HttpServletResponse response, String year, Model model) {
+		BillDaoImpl bdao = new BillDaoImpl();
+
+		// 回传json字符串
+		response.setCharacterEncoding("utf-8");
+		response.setContentType("application/json");
+
+		List outlist = bdao.yearsBillOut(year, userid);
+		List intlist = bdao.yearsBillInt(year, userid);
+		LayuiData laydata = new LayuiData();
+		if (outlist != null && intlist != null) {
+			laydata.code = LayuiData.SUCCESS;
+			laydata.data = intlist;
+			laydata.data1 = outlist;
+			laydata.msg = "月账单";
+		} else {
+			laydata.code = LayuiData.ERRR;
+			laydata.data = 0;
+			laydata.msg = "月账单";
 		}
 		Writer ptintout;
 		try {

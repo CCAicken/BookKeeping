@@ -12,7 +12,7 @@ public class VBill implements java.io.Serializable {
 	private String userId;
 	private String username;
 	private String password;
-	private Integer tel;
+	private String tel;
 	private Integer billId;
 	private String createTime;
 	private Double money;
@@ -24,6 +24,7 @@ public class VBill implements java.io.Serializable {
 	private String dictionaryName;
 	private String dictionaryType;
 	private String content;
+	private String sortNum;
 
 	// Constructors
 
@@ -32,7 +33,7 @@ public class VBill implements java.io.Serializable {
 	}
 
 	/** minimal constructor */
-	public VBill(String userId, String username, String password, Integer tel,
+	public VBill(String userId, String username, String password, String tel,
 			Integer billId, String createTime, Double money, String billType,
 			String consumptionType, String typeName, String dictionaryName,
 			String dictionaryType) {
@@ -51,11 +52,11 @@ public class VBill implements java.io.Serializable {
 	}
 
 	/** full constructor */
-	public VBill(String userId, String username, String password, Integer tel,
+	public VBill(String userId, String username, String password, String tel,
 			Integer billId, String createTime, Double money, String billType,
 			String consumptionType, String remarks, String typeName,
 			String dicMarks, String dictionaryName, String dictionaryType,
-			String content) {
+			String content, String sortNum) {
 		this.userId = userId;
 		this.username = username;
 		this.password = password;
@@ -71,6 +72,7 @@ public class VBill implements java.io.Serializable {
 		this.dictionaryName = dictionaryName;
 		this.dictionaryType = dictionaryType;
 		this.content = content;
+		this.sortNum = sortNum;
 	}
 
 	// Property accessors
@@ -99,11 +101,11 @@ public class VBill implements java.io.Serializable {
 		this.password = password;
 	}
 
-	public Integer getTel() {
+	public String getTel() {
 		return this.tel;
 	}
 
-	public void setTel(Integer tel) {
+	public void setTel(String tel) {
 		this.tel = tel;
 	}
 
@@ -193,6 +195,14 @@ public class VBill implements java.io.Serializable {
 
 	public void setContent(String content) {
 		this.content = content;
+	}
+
+	public String getSortNum() {
+		return this.sortNum;
+	}
+
+	public void setSortNum(String sortNum) {
+		this.sortNum = sortNum;
 	}
 
 }

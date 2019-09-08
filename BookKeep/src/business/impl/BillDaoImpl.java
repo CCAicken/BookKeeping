@@ -137,6 +137,20 @@ public class BillDaoImpl implements BillDao {
 		return sumIn;
 	}
 
+	@Override
+	public List yearsBillInt(String years, String userid) {
+		String sql = "select  DATE_FORMAT(createTime,'%Y-%m') as time,sum(money) as money, billtype from T_Bill where billtype=0  and createTime like '"
+				+ years + "%' and  userid=" + userid + " GROUP BY time";
+		return bdao.selectBySqlCol(sql);
+	}
+
+	@Override
+	public List yearsBillOut(String years, String userid) {
+		String sql = "select  DATE_FORMAT(createTime,'%Y-%m') as time,sum(money) as money, billtype from T_Bill where billtype=1  and createTime like '"
+				+ years + "%' and  userid=" + userid + " GROUP BY time";
+		return bdao.selectBySqlCol(sql);
+	}
+
 	// public static void main(String[] args) {
 	// BillDaoImpl dooo = new BillDaoImpl();
 	// // List<VBill> list = dooo.getAllBill();

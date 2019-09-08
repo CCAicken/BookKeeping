@@ -26,7 +26,7 @@
 	</table>
 <table name="V_Bill" catalog="BookKeeping" class="Model.VBill">
 	<primary-key>
-		<generator class="assigned"></generator>
+		<generator class="identity"></generator>
 	</primary-key>
 </table>
 </hibernate-reverse-engineering>

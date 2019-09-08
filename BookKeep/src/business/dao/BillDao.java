@@ -108,4 +108,20 @@ public interface BillDao {
 	 */
 	public double getBillOutByTime(String userid, String time);
 
+	/**
+	 * 年账单收入
+	 * 
+	 * @param years
+	 * @return
+	 */
+	public List yearsBillInt(String years, String userid);
+
+	/**
+	 * 年账单支出
+	 * 
+	 * @param years
+	 * @return
+	 */
+	public List yearsBillOut(String years, String userid);
+
 }
