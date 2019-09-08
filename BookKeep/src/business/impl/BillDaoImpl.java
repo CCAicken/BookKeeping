@@ -153,11 +153,12 @@ public class BillDaoImpl implements BillDao {
 
 	// public static void main(String[] args) {
 	// BillDaoImpl dooo = new BillDaoImpl();
-	// // List<VBill> list = dooo.getAllBill();
-	// // for (VBill vBill : list) {
-	// // System.out.println(vBill.getBillId());
-	// // }
-	// System.out.println(dooo.getBillContinueDaysByUser("1001"));
+	// List outlist = dooo.yearsBillOut("2019", "1004");
+	// List intlist = dooo.yearsBillInt("2019", "1004");
+	//
+	// for (int i = 0; i < outlist.size(); i++) {
+	// System.out.println(outlist.get(i).toString());
+	// }
 	// }
 
 }

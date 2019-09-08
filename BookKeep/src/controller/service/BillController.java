@@ -216,9 +216,9 @@ public class BillController {
 			HttpServletResponse response, String time, String userid,
 			Model model) {
 		BillDaoImpl bdao = new BillDaoImpl();
-		String str = "where createTime like '" + time + "%' and userid='"
-				+ userid + "'";
-
+		String str = "from VBill where createTime like '" + time
+				+ "%' and userid='" + userid + "'";
+		System.out.println(str + "++++++" + time + userid);
 		List<VBill> list = bdao.selectByPage(str, 1, 999999999);
 		// »Ø´«json×Ö·û´®
 		response.setCharacterEncoding("utf-8");
@@ -285,6 +285,11 @@ public class BillController {
 
 		List outlist = bdao.yearsBillOut(year, userid);
 		List intlist = bdao.yearsBillInt(year, userid);
+
+		for (int i = 0; i < outlist.size(); i++) {
+			System.out.println(outlist.get(i).toString());
+		}
+
 		LayuiData laydata = new LayuiData();
 		if (outlist != null && intlist != null) {
 			laydata.code = LayuiData.SUCCESS;
