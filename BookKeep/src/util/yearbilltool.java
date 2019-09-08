@@ -7,7 +7,7 @@ import java.util.List;
 public class yearbilltool {
 	private String billType;
 	private String time;
-	private double money;
+	private Double money;
 
 	public yearbilltool() {
 		super();
@@ -36,7 +36,7 @@ public class yearbilltool {
 		return list;
 	}
 
-	public yearbilltool(String billType, String time, double money) {
+	public yearbilltool(String billType, String time, Double money) {
 		super();
 		this.billType = billType;
 		this.time = time;
@@ -59,11 +59,11 @@ public class yearbilltool {
 		this.time = time;
 	}
 
-	public double getMoney() {
+	public Double getMoney() {
 		return money;
 	}
 
-	public void setMoney(double money) {
+	public void setMoney(Double money) {
 		this.money = money;
 	}
 
