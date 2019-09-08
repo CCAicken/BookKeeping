@@ -124,17 +124,26 @@ public class BillDaoImpl implements BillDao {
 	@Override
 	public double getBillInByTime(String userid, String time) {
 		// TODO Auto-generated method stub
-		String hql = "select sum(money) from VBill where userid=? and  createTime like ? and billType=0";
-		Object[] param = { userid, time };
-		int sumIn = bdao.selectValue(hql, param);
+		String hql = "select sum(money) as money from T_Bill where billtype=0  and createTime like '"
+				+ time + "%' and  userid=" + userid;
+		List<Double> list = bdao.selectBySql(hql);
+		double sumIn = list.get(0).doubleValue();
 		return sumIn;
+//		if(list!=null&&list.size()!=0){
+//			return list.toString();
+//		}
+//		return sumIn;
 	}
 
 	@Override
-	public double getBillOutByTime(String userid, String time) {
-		String hql = "select sum(money) from VBill where userid=? and  createTime like ? and billType=1";
-		Object[] param = { userid, time };
-		int sumIn = bdao.selectValue(hql, param);
+	public String getBillOutByTime(String userid, String time) {
+		String hql = "select sum(money) as money from T_Bill where billtype=1  and createTime like '"
+				+ time + "%' and  userid=" + userid;
+		List list = bdao.selectBySql(hql);
+		String sumIn = "0.00";
+		if(list!=null&&list.size()!=0){
+			return list.toString();
+		}
 		return sumIn;
 	}
 
@@ -168,6 +177,30 @@ public class BillDaoImpl implements BillDao {
 			return list;
 		}
 		return null;
+	}
+
+	@Override
+	public String getDayIn(String strwhere) {
+		// TODO Auto-generated method stub
+		String hql = "select SUM(money) as dayin from VBill where "+strwhere+" and billType=0";
+		List list = bdao.select(hql);
+		String dayout="0.00";
+		if(list!=null&&list.get(0)!=null){
+			dayout = list.get(0).toString();
+		}
+		return dayout;
+	}
+
+	@Override
+	public String getDayOut(String strwhere) {
+		// TODO Auto-generated method stub
+		String hql = "select SUM(money) as dayin from VBill where "+strwhere+" and billType=1";
+		List list = bdao.select(hql);
+		String dayout="0.00";
+		if(list!=null&&list.size()!=0){
+			dayout = list.get(0).toString();
+		}
+		return dayout;
 	}
 
 	// public static void main(String[] args) {

@@ -72,8 +72,8 @@ public class UserController {
 		response.setContentType("application/json");
 
 		BillDaoImpl dooo = new BillDaoImpl();
-		List<yearbilltool> outlist = dooo.yearsBillOut("2019", "1004");
-		List<yearbilltool> intlist = dooo.yearsBillInt("2019", "1004");
+		List<yearbilltool> outlist = dooo.yearsBillOut(year, userid);
+		List<yearbilltool> intlist = dooo.yearsBillInt(year, userid);
 		List<YearBill> billlist = new ArrayList<YearBill>();
 		Double jieyuDouble=0.0,zhichuDouble=0.0,shouruDouble=0.0;
 		for (yearbilltool yearbill : intlist) {
@@ -85,30 +85,17 @@ public class UserController {
 		}
 		jieyuDouble=shouruDouble-zhichuDouble;
 
-		for (Integer i = 1; i < 13; i++) {
+		for (int i = 0; i < outlist.size(); i++) {
 			YearBill yearbill = new YearBill();
-			for (int j = 0; j < intlist.size(); j++) {
-				String timestr = outlist.get(j).getTime().toString();
-				String monthstr = timestr.substring(timestr.length() - 1,
-						timestr.length());
-				if (monthstr.equals(i.toString())) {
-					Double jieyu = (intlist.get(j).getMoney() - outlist.get(j)
-							.getMoney());
-					yearbill.setYuefen(i + "ÔÂ");
-					yearbill.setJieyu(jieyu.toString());
-					yearbill.setShouru(intlist.get(j).getMoney().toString());
-					yearbill.setZhichu(outlist.get(j).getMoney().toString());
-					break;
-
-				} else {
-					yearbill.setYuefen(i + "ÔÂ");
-					yearbill.setJieyu("0");
-					yearbill.setShouru("0");
-					yearbill.setZhichu("0");
-					break;
-				}
-
-			}
+			String	timestr  = outlist.get(i).getTime().toString();
+			String monthstr = timestr.substring(timestr.length() - 1, timestr.length());
+			
+			Double jieyu = (intlist.get(i).getMoney() - outlist.get(i)
+					.getMoney());
+			yearbill.setYuefen(monthstr+ "ÔÂ");
+			yearbill.setJieyu(jieyu.toString());
+			yearbill.setShouru(intlist.get(i).getMoney().toString());
+			yearbill.setZhichu(outlist.get(i).getMoney().toString());
 			billlist.add(yearbill);
 		}
 		LayuiData laydata = new LayuiData();

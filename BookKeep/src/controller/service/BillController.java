@@ -223,12 +223,20 @@ public class BillController {
 				+ userid + "'";
 		System.out.println(str + "++++++" + time + userid);
 		List<VBill> list = bdao.selectByPage(str, 1, 999999999);
+		
+		String strwhere = "createTime like '"+time+"%'"+" and userid="+userid;
+		String dayin = bdao.getDayIn(strwhere);
+		String dayout = bdao.getDayOut(strwhere);
 		// 回传json字符串
 		response.setCharacterEncoding("utf-8");
 		response.setContentType("application/json");
 
+		System.out.println(dayin+","+dayout);
+		
 		LayuiData laydata = new LayuiData();
-		laydata.data = list;
+		laydata.data=list;
+		laydata.result2 = dayin;
+		laydata.result = dayout;
 		laydata.msg = "当天账单数";
 		Writer out;
 		try {
@@ -253,16 +261,30 @@ public class BillController {
 		response.setContentType("application/json");
 
 		double in = bdao.getBillInByTime(userid, time);
-		double out = bdao.getBillOutByTime(userid, time);
-		double sum = in - out;
+		String out = bdao.getBillOutByTime(userid, time);
+		double sum=0;
+		System.out.println(sum+","+in+","+out);
+		if(in!=0&&out=="0.00"){
+			sum=Double.valueOf(in);
+		}else if (in==0&&out!="0.00") {
+			sum=0;
+		}else if(in!=0&&out!="0.00") {
+			Double dayin = new Double(in);
+			Double dayout = new Double(out);
+			sum = dayin-dayout;
+		}
 		LayuiData laydata = new LayuiData();
 		if (sum >= 0) {
 			laydata.code = LayuiData.SUCCESS;
 			laydata.data = sum;
+			//laydata.result = in;
+			laydata.result2=out;
 			laydata.msg = "结余";
 		} else {
 			laydata.code = LayuiData.ERRR;
 			laydata.data = 0;
+			//laydata.result = in;
+			laydata.result2=out;
 			laydata.msg = "结余";
 		}
 		Writer ptintout;
@@ -355,6 +377,34 @@ public class BillController {
 		laydata.code = LayuiData.SUCCESS;
 		laydata.data = list;
 		laydata.msg = "账单编辑";
+		Writer ptintout;
+		try {
+			ptintout = response.getWriter();
+			ptintout.write(JSON.toJSONString(laydata));
+			ptintout.flush();
+			ptintout.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	@RequestMapping(value="dellbill")
+	public void DellBill(int billid, HttpServletRequest request,
+			HttpServletResponse response, Model model){
+		BillDaoImpl bdao = new BillDaoImpl();
+
+		// 回传json字符串
+		response.setCharacterEncoding("utf-8");
+		response.setContentType("application/json");
+		boolean result = bdao.delBill(billid);
+		LayuiData laydata = new LayuiData();
+		if(result){
+			laydata.code=LayuiData.SUCCESS;
+			laydata.msg="删除成功";
+		}else{
+			laydata.code=LayuiData.ERRR;
+			laydata.msg="删除失败";
+		}
 		Writer ptintout;
 		try {
 			ptintout = response.getWriter();
