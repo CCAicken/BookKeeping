@@ -219,8 +219,8 @@ public class BillController {
 			HttpServletResponse response, String time, String userid,
 			Model model) {
 		BillDaoImpl bdao = new BillDaoImpl();
-		String str = "from VBill where createTime like '" + time
-				+ "%' and userid='" + userid + "'";
+		String str = " where createTime like '" + time + "%' and userid='"
+				+ userid + "'";
 		System.out.println(str + "++++++" + time + userid);
 		List<VBill> list = bdao.selectByPage(str, 1, 999999999);
 		// 回传json字符串
@@ -321,6 +321,40 @@ public class BillController {
 			laydata.data = 0;
 			laydata.msg = "月账单";
 		}
+		Writer ptintout;
+		try {
+			ptintout = response.getWriter();
+			ptintout.write(JSON.toJSONString(laydata));
+			ptintout.flush();
+			ptintout.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * 根据billid获取账单信息
+	 * 
+	 * @param billid
+	 * @param request
+	 * @param response
+	 * @param model
+	 */
+	@RequestMapping(value = "getbybillid")
+	public void getBillByBillId(int billid, HttpServletRequest request,
+			HttpServletResponse response, Model model) {
+		BillDaoImpl bdao = new BillDaoImpl();
+
+		// 回传json字符串
+		response.setCharacterEncoding("utf-8");
+		response.setContentType("application/json");
+
+		List<VBill> list = bdao.getBillByBillId(billid);
+		LayuiData laydata = new LayuiData();
+		laydata.code = LayuiData.SUCCESS;
+		laydata.data = list;
+		laydata.msg = "账单编辑";
 		Writer ptintout;
 		try {
 			ptintout = response.getWriter();

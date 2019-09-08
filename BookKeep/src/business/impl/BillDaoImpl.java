@@ -155,6 +155,18 @@ public class BillDaoImpl implements BillDao {
 		return billtool.toList(bdao.selectBySqlrs(sql));
 	}
 
+	@Override
+	public List getBillByBillId(int billid) {
+		// TODO Auto-generated method stub
+		String hql = "from VBill where billId=?";
+		Object[] para = { billid };
+		List<VBill> list = bdao.select(hql, para);
+		if (list != null && list.size() > 0) {
+			return list;
+		}
+		return null;
+	}
+
 	// public static void main(String[] args) {
 	// BillDaoImpl dooo = new BillDaoImpl();
 	// List outlist = dooo.yearsBillOut("2019", "1004");

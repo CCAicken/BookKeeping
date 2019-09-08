@@ -124,4 +124,12 @@ public interface BillDao {
 	 */
 	public List yearsBillOut(String years, String userid);
 
+	/**
+	 * 根据billid获取账单信息
+	 * 
+	 * @param billid
+	 * @return
+	 */
+	public List getBillByBillId(int billid);
+
 }
