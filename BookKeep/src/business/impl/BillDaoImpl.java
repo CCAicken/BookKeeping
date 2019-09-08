@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.List;
 
 import util.TimeUtil;
+import util.yearbilltool;
 import Basic.iHibBaseDAO;
 import Basic.iHibBaseDAOImpl;
 import Model.TBill;
@@ -138,17 +139,20 @@ public class BillDaoImpl implements BillDao {
 	}
 
 	@Override
-	public List yearsBillInt(String years, String userid) {
+	public List<yearbilltool> yearsBillInt(String years, String userid) {
+		yearbilltool billtool = new yearbilltool();
 		String sql = "select  DATE_FORMAT(createTime,'%Y-%m') as time,sum(money) as money, billtype from T_Bill where billtype=0  and createTime like '"
 				+ years + "%' and  userid=" + userid + " GROUP BY time";
-		return bdao.selectBySqlCol(sql);
+		return billtool.toList(bdao.selectBySqlrs(sql));
 	}
 
 	@Override
-	public List yearsBillOut(String years, String userid) {
+	public List<yearbilltool> yearsBillOut(String years, String userid) {
+		yearbilltool billtool = new yearbilltool();
 		String sql = "select  DATE_FORMAT(createTime,'%Y-%m') as time,sum(money) as money, billtype from T_Bill where billtype=1  and createTime like '"
 				+ years + "%' and  userid=" + userid + " GROUP BY time";
-		return bdao.selectBySqlCol(sql);
+
+		return billtool.toList(bdao.selectBySqlrs(sql));
 	}
 
 	// public static void main(String[] args) {

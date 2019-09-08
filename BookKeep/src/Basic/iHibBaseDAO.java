@@ -1,5 +1,6 @@
 package Basic;
 
+import java.sql.ResultSet;
 import java.util.List;
 
 /**
@@ -206,6 +207,15 @@ public interface iHibBaseDAO {
 	 * @return List 失败返回null
 	 */
 	public List selectBySqlCol(String sql);
+
+	/**
+	 * 使用无参数的sql实现查询的，他将返回基于sql中查询对象的List数组对象 含列名
+	 * 
+	 * @param String
+	 *            符合sql结构的无参数查询语句
+	 * @return ResultSet 失败返回null
+	 */
+	public ResultSet selectBySqlrs(String sql);
 
 	/**
 	 * 利用无参数的sql实现数据表对象的更新操作

@@ -2,6 +2,7 @@ package controller.service;
 
 import java.io.IOException;
 import java.io.Writer;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -12,6 +13,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import util.LayuiData;
+import util.YearBill;
+import util.yearbilltool;
 import Model.TBill;
 import Model.VBill;
 import business.impl.BillDaoImpl;
@@ -283,11 +286,28 @@ public class BillController {
 		response.setCharacterEncoding("utf-8");
 		response.setContentType("application/json");
 
-		List outlist = bdao.yearsBillOut(year, userid);
-		List intlist = bdao.yearsBillInt(year, userid);
+		List<yearbilltool> outlist = bdao.yearsBillOut(year, userid);
+		List<yearbilltool> intlist = bdao.yearsBillInt(year, userid);
+		List<YearBill> billlist = new ArrayList<YearBill>();
 
-		for (int i = 0; i < outlist.size(); i++) {
-			System.out.println(outlist.get(i).toString());
+		for (Integer i = 0; i < 13; i++) {
+			YearBill yearbill = new YearBill();
+			String timestr = outlist.get(i).getTime().toString();
+			String monthstr = timestr.substring(timestr.length() - 1,
+					timestr.length());
+			if (monthstr.equals(i.toString())) {
+				yearbill.setYuefen("0" + i + "ÔÂ");
+				yearbill.setJieyu("0");
+				yearbill.setShouru("0");
+				yearbill.setZhichu("6666");
+			} else {
+				yearbill.setYuefen("0" + i + "ÔÂ");
+				yearbill.setJieyu("0");
+				yearbill.setShouru("0");
+				yearbill.setZhichu("0");
+			}
+
+			System.out.println(outlist.get(i).getTime());
 		}
 
 		LayuiData laydata = new LayuiData();
