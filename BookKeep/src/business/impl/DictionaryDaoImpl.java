@@ -24,4 +24,26 @@ public class DictionaryDaoImpl implements DictionaryDao {
 		}
 		return null;
 	}
+
+	@Override
+	public List<TDictionaryInfo> GetInCome() {
+		// TODO Auto-generated method stub
+		String hql = "from TDictionaryInfo where dictionaryType=0";
+		List<TDictionaryInfo> list = bdao.select(hql);
+		if (list != null && list.size() > 0) {
+			return list;
+		}
+		return null;
+	}
+
+	@Override
+	public List<TDictionaryInfo> GetPay() {
+		// TODO Auto-generated method stub
+		String hql = "from TDictionaryInfo where dictionaryType=1";
+		List<TDictionaryInfo> list = bdao.select(hql);
+		if (list != null && list.size() > 0) {
+			return list;
+		}
+		return null;
+	}
 }

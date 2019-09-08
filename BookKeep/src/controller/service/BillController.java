@@ -35,6 +35,8 @@ public class BillController {
 		// »Ø´«json×Ö·û´®
 		response.setCharacterEncoding("utf-8");
 		response.setContentType("application/json");
+		String id = request.getParameter("id");
+		System.out.print(id);
 
 		LayuiData laydata = new LayuiData();
 
