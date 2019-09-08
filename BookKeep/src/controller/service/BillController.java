@@ -218,12 +218,12 @@ public class BillController {
 		BillDaoImpl bdao = new BillDaoImpl();
 		String str = "where createTime like '" + time + "%' and userid='"
 				+ userid + "'";
+
 		List<VBill> list = bdao.selectByPage(str, 1, 999999999);
 		// 回传json字符串
 		response.setCharacterEncoding("utf-8");
 		response.setContentType("application/json");
 
-		System.out.println(time);
 		LayuiData laydata = new LayuiData();
 		laydata.data = list;
 		laydata.msg = "当天账单数";
