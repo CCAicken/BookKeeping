@@ -75,6 +75,15 @@ public class UserController {
 		List<yearbilltool> outlist = dooo.yearsBillOut("2019", "1004");
 		List<yearbilltool> intlist = dooo.yearsBillInt("2019", "1004");
 		List<YearBill> billlist = new ArrayList<YearBill>();
+		Double jieyuDouble=0.0,zhichuDouble=0.0,shouruDouble=0.0;
+		for (yearbilltool yearbill : intlist) {
+			zhichuDouble+=yearbill.getMoney();
+		}
+		
+		for (yearbilltool yearbill : outlist) {
+			shouruDouble+=yearbill.getMoney();
+		}
+		jieyuDouble=shouruDouble-zhichuDouble;
 
 		for (Integer i = 1; i < 13; i++) {
 			YearBill yearbill = new YearBill();
@@ -106,7 +115,10 @@ public class UserController {
 		if (outlist != null && intlist != null) {
 			laydata.code = LayuiData.SUCCESS;
 			laydata.data = billlist;
-			laydata.msg = "ÔÂÕËµ¥";
+			laydata.result=zhichuDouble.toString();
+			laydata.result2=shouruDouble.toString();
+			
+			laydata.msg = jieyuDouble.toString();
 		} else {
 			laydata.code = LayuiData.ERRR;
 			laydata.data = 0;
