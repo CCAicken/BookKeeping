@@ -37,9 +37,11 @@ public class BillDaoImpl implements BillDao {
 
 	@Override
 	public boolean delBill(int billId) {
-		String sql = "delete from T_Bill where billID=?";
-		Object[] para = { billId };
-		return bdao.delete(sql, para);
+		// String sql = "delete from T_Bill where billID=?";
+		// Object[] para = { billId };
+		TBill bill = (TBill) bdao.findById(TBill.class, billId);
+		boolean result = bdao.delete(bill);
+		return bdao.delete(bill);
 
 	}
 
@@ -126,24 +128,21 @@ public class BillDaoImpl implements BillDao {
 		// TODO Auto-generated method stub
 		String hql = "select sum(money) as money from T_Bill where billtype=0  and createTime like '"
 				+ time + "%' and  userid=" + userid;
-		List<Double> list = bdao.selectBySql(hql);
-		double sumIn = list.get(0).doubleValue();
+		List list = bdao.selectBySql(hql);
+		double sumIn = Double.parseDouble(list.get(0).toString());
 		return sumIn;
-//		if(list!=null&&list.size()!=0){
-//			return list.toString();
-//		}
-//		return sumIn;
+		// if(list!=null&&list.size()!=0){
+		// return list.toString();
+		// }
+		// return sumIn;
 	}
 
 	@Override
-	public String getBillOutByTime(String userid, String time) {
+	public double getBillOutByTime(String userid, String time) {
 		String hql = "select sum(money) as money from T_Bill where billtype=1  and createTime like '"
 				+ time + "%' and  userid=" + userid;
 		List list = bdao.selectBySql(hql);
-		String sumIn = "0.00";
-		if(list!=null&&list.size()!=0){
-			return list.toString();
-		}
+		double sumIn = Double.parseDouble(list.get(0).toString());
 		return sumIn;
 	}
 
@@ -180,27 +179,26 @@ public class BillDaoImpl implements BillDao {
 	}
 
 	@Override
-	public String getDayIn(String strwhere) {
+	public double getDayIn(String strwhere) {
 		// TODO Auto-generated method stub
-		String hql = "select SUM(money) as dayin from VBill where "+strwhere+" and billType=0";
+		String hql = "select SUM(money) as dayin from VBill where " + strwhere
+				+ " and billType=0";
 		List list = bdao.select(hql);
-		String dayout="0.00";
-		if(list!=null&&list.get(0)!=null){
-			dayout = list.get(0).toString();
+		double dayin = 0;
+		if (list != null && list.get(0) != null) {
+			dayin = Double.parseDouble(list.get(0).toString());
 		}
-		return dayout;
+		return dayin;
 	}
 
 	@Override
-	public String getDayOut(String strwhere) {
+	public double getDayOut(String strwhere) {
 		// TODO Auto-generated method stub
-		String hql = "select SUM(money) as dayin from VBill where "+strwhere+" and billType=1";
+		String hql = "select SUM(money) as dayin from VBill where " + strwhere
+				+ " and billType=1";
 		List list = bdao.select(hql);
-		String dayout="0.00";
-		if(list!=null&&list.size()!=0){
-			dayout = list.get(0).toString();
-		}
-		return dayout;
+		double dayin = Double.parseDouble(list.get(0).toString());
+		return dayin;
 	}
 
 	// public static void main(String[] args) {

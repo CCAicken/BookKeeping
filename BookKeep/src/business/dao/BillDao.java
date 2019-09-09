@@ -106,7 +106,7 @@ public interface BillDao {
 	 * @param time
 	 * @return
 	 */
-	public String getBillOutByTime(String userid, String time);
+	public double getBillOutByTime(String userid, String time);
 
 	/**
 	 * 年账单收入
@@ -131,19 +131,23 @@ public interface BillDao {
 	 * @return
 	 */
 	public List getBillByBillId(int billid);
+
 	/**
 	 * 获取一天内的收入总和
+	 * 
 	 * @param userid
 	 * @param datetime
 	 * @return
 	 */
-	public String getDayIn(String strwhere);
+	public double getDayIn(String strwhere);
+
 	/**
 	 * 获取一天内的支出总和
+	 * 
 	 * @param userid
 	 * @param datetime
 	 * @return
 	 */
-	public String getDayOut(String strwhere);
+	public double getDayOut(String strwhere);
 
 }
